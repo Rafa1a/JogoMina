@@ -9,6 +9,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Alert
 } from 'react-native';
 import {
   Colors,
@@ -17,7 +18,13 @@ import {
 import params from './params'
 import Field from './Componentes/Field'
 import Minefield from './Minefield'
-import { creatminedboard } from './functions';
+import { 
+  creatminedboard,
+  cloneboard,
+  opoenfield,
+  hadexplosion,
+  wongame,
+  showmines } from './functions';
 //////////////////////////////////////////////////////
 // const initialstat = {
 //   displayValue : '0',
@@ -40,12 +47,30 @@ export default class App extends React.Component {
     const cols = params.getColumnsAmount() 
     const rows = params.getRowsAmount()
     return {
-      board: creatminedboard(rows, cols,this.minesAmaoun())
+      board: creatminedboard(rows, cols,this.minesAmaoun()),
+      won:false,
+      lost:false,
+
     }
   }
+  onOpenfield = (row:number,column:number) => {
+    const board = cloneboard(this.state.stateini.board)
+    opoenfield(board,row,column)
+    const lost =hadexplosion(board)
+    const won = wongame(board)
+    if(lost){
+      showmines(board)
+      Alert.alert('Perdeuuuu', 'que burro!')
+    }
+    if(won){
+      Alert.alert('parabens', 'vc venceu')
+    }
+    this.setState({board, lost, won})
+  } 
   state ={
     stateini: this.creatstate()
   } 
+  
   render() {
    
     return (
@@ -55,7 +80,8 @@ export default class App extends React.Component {
         {params.getRowsAmount()} x {params.getColumnsAmount()}
       </Text>
       <View style={styles.board}>
-          <Minefield board = {this.state.stateini.board}/>
+          <Minefield board = {this.state.stateini.board}
+          onOpenfield={this.onOpenfield}/>
       </View>
       
     </SafeAreaView>)

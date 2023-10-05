@@ -8,7 +8,8 @@ interface CompProps {
 const exemplo: React.FC<any> = (props) => {
     const rows = props.board.map((row:any,r:number) =>{
         const columns = row.map((field:any, c:number)=>{
-            return <Field {...field} key={c}/>
+            return <Field {...field} key={c}
+            onOpen={()=> props.onOpenfield(r,c)}/>
         })
         return <View key={r} style={{flexDirection: 'row'}}>{columns}</View>
     })

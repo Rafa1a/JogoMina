@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, StyleSheet, SafeAreaView } from "react-native";
+import { Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback } from "react-native";
 import params from '../params'
 import Mine from './Mine'
 import Flags from './flags'
 const exemplo: React.FC<any> = (props) => {
-  const { mined, opened, nearmines, exploded, flagged } = props;
+  const { mined, opened, nearmines, exploded, flagged, onOpen } = props;
 
   const stylefield: any = [styles.field];
 
@@ -23,14 +23,16 @@ const exemplo: React.FC<any> = (props) => {
   }
 
   return (
-    <SafeAreaView style={stylefield}>
-      {!mined && opened && nearmines > 0 ? (
-        <Text style={[styles.label, { color: color || 'defaultColor' }]}>
-          {nearmines}
-        </Text>) : false}
-        {mined && opened ? <Mine/> : false}
-        {flagged && !opened ? <Flags/> : false}
-    </SafeAreaView>
+    <TouchableWithoutFeedback onPress={onOpen}>
+      <SafeAreaView style={stylefield}>
+        {!mined && opened && nearmines > 0 ? (
+          <Text style={[styles.label, { color: color || 'defaultColor' }]}>
+            {nearmines}
+          </Text>) : false}
+          {mined && opened ? <Mine/> : false}
+          {flagged && !opened ? <Flags/> : false}
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
