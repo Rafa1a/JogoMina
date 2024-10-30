@@ -3,7 +3,7 @@
 ## 📱 Sobre o Projeto
 
 JogoMina é uma implementação do clássico jogo Campo Minado (Minesweeper) em React Native. O jogo apresenta uma interface intuitiva, sistema de marcação de bandeiras, detecção de vitória/derrota e um campo de jogo dinâmico que se ajusta ao tamanho da tela.
-
+ 
 ## 🎮 Funcionalidades
 
 - [x] Campo de jogo dinâmico
